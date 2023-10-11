@@ -2,8 +2,6 @@ package com.sy.store.service;
 
 import com.sy.store.entity.User;
 import com.sy.store.service.ex.ServiceException;
-import com.sy.store.service.impl.UserServiceImpl;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,7 @@ public class UserServiceTests {
     public void reg(){
         try{
             User user = new User();
-            user.setUsername("Test3");
+            user.setUsername("Test7");
             user.setPassword("Test1");
 
             userService.reg(user);
@@ -32,6 +30,11 @@ public class UserServiceTests {
         }
 
 
+    }
+    @Test
+    public void login(){
+        User user = userService.login("test1","test1");
+        System.out.println(user);
     }
 
 }

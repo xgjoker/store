@@ -4,4 +4,5 @@ import com.sy.store.entity.User;
 
 public interface IUserService {
     void reg(User user);
+    User login(String username, String password);
 }
