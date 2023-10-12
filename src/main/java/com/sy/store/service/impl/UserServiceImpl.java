@@ -110,11 +110,24 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    @Override
+    public void changeAvatar(Integer uid, String username, String avatar) {
+        User result = userMapper.findByUid(uid);
+        if(result==null || result.getIsDelete()==1) {
+            throw new UserNotFoundException("user not found");
+        }
+        Integer rows = userMapper.updateAvatarByUid(uid,avatar,username,new Date());
+        if(rows!=1){
+            throw new UpdateException("unknown update exception");
+        }
+
+
+    }
+
     private String getMD5Password(String password, String salt){
         for(int i=0;i<3;i++){
             password = DigestUtils.md5DigestAsHex((salt+password+salt).getBytes()).toUpperCase();
         }
         return password;
-
     }
 }

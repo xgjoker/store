@@ -54,4 +54,9 @@ public class UserServiceTests {
         user.setGender(1);
         userService.changeInfo(37,"Test8", user);
     }
+
+    @Test
+    public void changeAvatar(){
+        userService.changeAvatar(37,"admin","fee/po.html");
+    }
 }
