@@ -4,6 +4,8 @@ import com.sy.store.service.ex.*;
 import com.sy.store.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpSession;
+
 public class BaseController {
     
     @ExceptionHandler(ServiceException.class)
@@ -21,7 +23,18 @@ public class BaseController {
         } else if (e instanceof UserNotFoundException) {
             result.setState(7000);
             result.setMessage(e.getMessage());
+        } else if (e instanceof UpdateException) {
+            result.setState(8000);
+            result.setMessage(e.getMessage());
         }
         return result;
+    }
+
+    protected final Integer getUidFromSession(HttpSession session){
+        return Integer.valueOf(session.getAttribute("uid").toString());
+    }
+
+    protected final String getUsernameFromSession(HttpSession session){
+        return session.getAttribute("username").toString();
     }
 }

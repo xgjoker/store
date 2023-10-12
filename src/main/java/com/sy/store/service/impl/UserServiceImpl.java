@@ -3,10 +3,7 @@ package com.sy.store.service.impl;
 import com.sy.store.entity.User;
 import com.sy.store.mapper.UserMapper;
 import com.sy.store.service.IUserService;
-import com.sy.store.service.ex.InsertException;
-import com.sy.store.service.ex.PasswordNotMatchException;
-import com.sy.store.service.ex.UserNotFoundException;
-import com.sy.store.service.ex.UsernameDuplicationException;
+import com.sy.store.service.ex.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -70,6 +67,23 @@ public class UserServiceImpl implements IUserService {
         user.setAvatar(result.getAvatar());
 
         return user;
+    }
+
+    @Override
+    public void changePassword(Integer uid, String username, String oldPassword, String newPassword) {
+        User result = userMapper.findByUid(uid);
+        if(result==null || result.getIsDelete()==1){
+            throw new UserNotFoundException("user not found");
+        }
+        String oldMd5Password = getMD5Password(oldPassword,result.getSalt());
+        if(!result.getPassword().equals(oldMd5Password)){
+            throw new PasswordNotMatchException("wrong password");
+        }
+        String newMd5Password = getMD5Password(newPassword,result.getSalt());
+        Integer rows = userMapper.updatePasswordByUid(uid,newMd5Password,username,new Date());
+        if(rows!=1){
+            throw new UpdateException("unknown update exception");
+        }
     }
 
     private String getMD5Password(String password, String salt){
