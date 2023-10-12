@@ -41,4 +41,17 @@ public class UserServiceTests {
     public void changePassword(){
         userService.changePassword(37,"admin","Test2","Test1");
     }
+
+    @Test
+    public void getByUid(){
+        System.out.println(userService.getByUid(37));
+    }
+
+    @Test
+    public void changeInfo(){
+        User user = new User();
+        user.setPhone("222");
+        user.setGender(1);
+        userService.changeInfo(37,"Test8", user);
+    }
 }

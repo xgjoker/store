@@ -86,6 +86,30 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    @Override
+    public User getByUid(Integer uid) {
+        User result = userMapper.findByUid(uid);
+        if(result==null || result.getIsDelete()==1) {
+            throw new UserNotFoundException("user not found");
+        }
+        return result;
+    }
+
+    @Override
+    public void changeInfo(Integer uid, String username, User user) {
+        User result = userMapper.findByUid(uid);
+        if(result==null || result.getIsDelete()==1) {
+            throw new UserNotFoundException("user not found");
+        }
+        user.setUid(uid);
+        user.setModifiedUser(username);
+        user.setModifiedTime(new Date());
+        Integer rows = userMapper.updateInfoByUid(user);
+        if(rows!=1){
+            throw new UpdateException("unknown update exception");
+        }
+    }
+
     private String getMD5Password(String password, String salt){
         for(int i=0;i<3;i++){
             password = DigestUtils.md5DigestAsHex((salt+password+salt).getBytes()).toUpperCase();
