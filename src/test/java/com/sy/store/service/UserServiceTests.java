@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Comparator;
+import java.util.function.Consumer;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class UserServiceTests {
@@ -58,5 +61,41 @@ public class UserServiceTests {
     @Test
     public void changeAvatar(){
         userService.changeAvatar(37,"admin","fee/po.html");
+    }
+
+    @Test
+    public void test(){
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        };
+        r = ()->System.out.println("test run");
+        r.run();
+
+
+
+        Comparator<Integer> c1 = new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return Integer.compare(o1,o2);
+            }
+        };
+
+        System.out.println(c1.compare(121,21));
+        Comparator<Integer> c2 = (o1,o2) -> {System.out.println("test");
+        return Integer.compare(o1,o2);
+        };
+        System.out.println(c2.compare(121,21));
+        Comparator<Integer> c3 = (o1,o2) -> Integer.compare(o1,o2);
+        System.out.println(c3.compare(121,21));
+    }
+
+    Consumer<Integer> con1 = new Consumer<Integer>() {
+        @Override
+        public void accept(Integer integer) {
+
+        }
     }
 }

@@ -18,6 +18,9 @@ public class BaseController {
         } else if (e instanceof InsertException) {
             result.setState(5000);
             result.setMessage(e.getMessage());
+        } else if (e instanceof AddressCountLimitException) {
+            result.setState(5001);
+            result.setMessage(e.getMessage());
         } else if (e instanceof PasswordNotMatchException) {
             result.setState(6000);
             result.setMessage(e.getMessage());

@@ -26,7 +26,7 @@ public class LoginInterceptorConfig implements WebMvcConfigurer {
         whiteList.add("/web/product.html");
         whiteList.add("/users/reg");
         whiteList.add("/users/login");
-
+        whiteList.add("/districts/**");
         registry.addInterceptor(interceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(whiteList);
